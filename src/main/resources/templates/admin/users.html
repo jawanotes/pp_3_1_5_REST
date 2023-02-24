@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>List of users. One page to rule them all.</title>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th th>ID</th>
+            <th th>Name</th>
+            <th th>Password</th>
+            <th th>Roles</th>
+            <th th>Edit</th>
+            <th th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="array: ${userlist}">
+            <td th:text="${array.getId()}"/>
+            <td th:text="${array.getUsername()}"/>
+            <td th:text="${array.getPassword()}"/>
+            <td th:text="${array.getRolesAsString()}"/>
+            <td>
+                <a th:href="@{/admin/edit(id=${array.getId()})}">Edit</a>
+            </td>
+            <td>
+                <form th:method="POST"
+                      th:action="@{/admin/delete(id=${array.getId()})}"
+                >
+                    <input class="button"
+                           type="submit"
+                           value="Delete"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<br/>
+<hr/>
+<a href="/admin/new">Create new person</a>
+
+
+<br>
+<form th:action="@{/logout}" th:method="get">
+    <input class="button button-block" type="submit" value="Logout"/>
+</form>
+</body>
+</html>

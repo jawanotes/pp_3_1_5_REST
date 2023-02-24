@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+<h1>User, welcome spring boot security page!</h1>
+<br/>
+
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th th>ID</th>
+            <th th>Name</th>
+            <th th>Password</th>
+            <th th>Roles</th>
+<!--            <th th>Edit</th>
+            <th th>Delete</th>-->
+        </tr>
+        </thead>
+        <tbody>
+<!--        <tr th:each="array: ${userlist}">-->
+        <tr>
+            <td th:text="${user.getId()}"/>
+            <td th:text="${user.getUsername()}"/>
+            <td th:text="${user.getPassword()}"/>
+            <td th:text="${user.getRolesAsString()}"/>
+<!--            <td>
+                <a th:href="@{/admin/edit(id=${array.getId()})}">Edit</a>
+            </td>
+            <td>
+                <form th:method="POST"
+                      th:action="@{/admin/delete(id=${array.getId()})}"
+                >
+                    <input class="button"
+                           type="submit"
+                           value="Delete"/>
+                </form>
+            </td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<form th:action="@{/logout}" th:method="get">
+    <input class="button button-block" type="submit" value="Logout"/>
+</form>
+</body>
+</html>
