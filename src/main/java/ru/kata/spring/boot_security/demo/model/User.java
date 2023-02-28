@@ -5,15 +5,15 @@ package ru.kata.spring.boot_security.demo.model;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+//import org.hibernate.annotations.LazyCollection;
+//import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -35,70 +35,40 @@ public class User implements UserDetails {
     private String password;
     //private Boolean isActive;
 
-    /*@Fetch(FetchMode.JOIN)
+    /**
+     * Nikita Nesterenko: private List<Role> roles; - поменять на Set,
+     *                      разобраться с аннотациями над полем,
+     *                      у тебя куча их и не все нужны
+     */
+    /*
+    @Fetch(FetchMode.JOIN)
     @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_roles"))*/
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_roles"))
+    */
 
     //@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Fetch(FetchMode.JOIN)
+    //@CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+
     //@ManyToMany(cascade = {CascadeType.ALL}) // “Detached Entity Passed to Persist” Error
-    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
+    //@ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
     //@Enumerated(EnumType.STRING)
     //private Set<Role> roles;
-    @LazyCollection(LazyCollectionOption.TRUE)
-    private List<Role> roles;
+    //@LazyCollection(LazyCollectionOption.TRUE)
+    //private List<Role> roles;
+    @Fetch(FetchMode.JOIN)
+    @ManyToMany
+    private Set<Role> roles;
 
-    /*public User() {
-    }*/
-    /*public User(Long id) {
-        this.id = id;
-    }
-
-    public User(String name, String lastName) {
-        this.name = name;
-        this.lastName = lastName;
-    }
-
-    public User(Long id, String name, String lastName) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-    }*/
-
-/*    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }*/
-
-/*    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }*/
-
-    public Long getId() {
-        return id;
-    }
-
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
     public String getRolesAsString() {
-        return roles.stream().map(Role::toString).collect(Collectors.joining(", "));
+        return roles.stream().map(Role::getName).collect(Collectors.joining(", "));
     }
 
     @Override

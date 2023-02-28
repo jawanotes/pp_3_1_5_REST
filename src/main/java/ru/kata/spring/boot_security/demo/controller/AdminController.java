@@ -11,7 +11,9 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -35,9 +37,10 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String listUsers(ModelMap model) {
+    public String listUsers(ModelMap model, Principal principal) {
+        User user = (User) userService.loadUserByUsername(principal.getName());
         List<User> userList = (List<User>) userService.getAllUsers();
-        //model.addAttribute("userlist", userService.getAllUsers());
+        model.addAttribute("user", user);
         model.addAttribute("userlist", userList);
         return "/admin/users";
     }
@@ -46,7 +49,7 @@ public class AdminController {
     public String editPage(@RequestParam(value = "id", required = true) Long id, ModelMap model) {
         User user = userService.getUser(id);
         user.setPassword("");
-        List<Role> roles = user.getRoles();
+        Set<Role> roles = user.getRoles();
         model.addAttribute("user", user);
         model.addAttribute("allRoles", userService.getAllRoles());
         model.addAttribute("userRoles", roles);

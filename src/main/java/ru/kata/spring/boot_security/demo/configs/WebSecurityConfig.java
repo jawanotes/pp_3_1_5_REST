@@ -33,14 +33,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.userService = userService;
     }
 
+    /**
+     * Nikita Nesterenko: админ должен иметь доступ к юзеру, поменять местами,
+     *                      от более открытого к более закрытому вниз
+     *
+     * Konstantin Harin: админ и так имел доступ к юзеру, я проверял
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                //.antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/user/**").authenticated()
+                .and()
+                .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasRole("USER")
+                .and()
+                .authorizeRequests()
                 .antMatchers("/", "/index").permitAll()
-                .anyRequest().authenticated()
+                //.anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()

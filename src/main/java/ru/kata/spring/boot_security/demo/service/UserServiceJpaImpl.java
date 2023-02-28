@@ -16,14 +16,19 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+//import java.util.stream.Collectors;
+
 @Primary
 @Service
 public class UserServiceJpaImpl implements UserService {
     //private final UserDao userDao;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
 
     public UserServiceJpaImpl(//UserDao userDao,
                               UserRepository userRepository,
@@ -83,18 +88,19 @@ public class UserServiceJpaImpl implements UserService {
     @Transactional(readOnly = true)
     public List<?> getAllUsers() {
         return userRepository.findAll();
-        //return userDao.getAllUsers();
     }
 
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
+    public Set<Role> getAllRoles() {
+        //return roleRepository.findAll();
+        return new HashSet<>(roleRepository.findAll());
     }
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.getUserByUsername(username);
-        return user;
+        /*User user = userRepository.getUserByUsername(username);
+        return user;*/
+        return userRepository.getUserByUsername(username);
     }
 
     @PostConstruct
@@ -115,13 +121,16 @@ public class UserServiceJpaImpl implements UserService {
             user.setUsername("user");
             user.setPassword("123");
             //user.setRoles(List.of(userRole));
-            user.setRoles(List.of(roleRepository.getRoleByName("ROLE_USER")));
+            /*Set<Role> roles = Collections.singleton(roleRepository.getRoleByName("ROLE_USER"));
+            roles.add(roleRepository.getRoleByName("ROLE_USER"));
+            user.setRoles(roles);*/
+            user.setRoles(Collections.singleton(roleRepository.getRoleByName("ROLE_USER")));
             addUser(user);
 
             User admin = new User();
             admin.setUsername("admin");
             admin.setPassword("123");
-            admin.setRoles(roleRepository.findAll());
+            admin.setRoles(new HashSet<>(roleRepository.findAll()));
             addUser(admin);
         }
     }
