@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.LoadUserService;
-import ru.kata.spring.boot_security.demo.service.UserService;
+//import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -34,7 +34,7 @@ public class UnprivilegedController {
     @GetMapping("/user")
     public String userPage(Principal principal, ModelMap model) {
         //User user = (User) userService.loadUserByUsername(principal.getName());
-        User user = loadUserService.loadUserSecurely(principal.getName());
+        User user = (User) loadUserService.loadUserByUsername(principal.getName());
         model.addAttribute("user", user);
         /*if (user.getRoles().contains("ROLE_ADMIN")) {
             model.addAttribute("isAdmin", true);

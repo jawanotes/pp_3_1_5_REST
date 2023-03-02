@@ -45,7 +45,7 @@ public class AdminController {
     @GetMapping("/users")
     public String listUsers(ModelMap model, Principal principal) {
         //User user = (User) userService.loadUserByUsername(principal.getName());
-        User user = loadUserService.loadUserSecurely(principal.getName());
+        User user = (User) loadUserService.loadUserByUsername(principal.getName());
         List<User> userList = (List<User>) userService.getAllUsers();
         model.addAttribute("user", user);
         model.addAttribute("userlist", userList);
