@@ -4,11 +4,13 @@ package ru.kata.spring.boot_security.demo.controller;
 //import com.hkl.pp_3_1_2_crud_boot.model.User;
 //import com.hkl.pp_3_1_2_crud_boot.service.UserService;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.LoadUserService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
@@ -20,9 +22,13 @@ import java.util.Set;
 //@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
     private final UserService userService;
+    private final LoadUserService loadUserService;
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService,
+                           @Qualifier(value = "loadUserServiceProvider")
+                           LoadUserService loadUserService) {
         this.userService = userService;
+        this.loadUserService = loadUserService;
     }
 
     @GetMapping("")
@@ -38,7 +44,8 @@ public class AdminController {
 
     @GetMapping("/users")
     public String listUsers(ModelMap model, Principal principal) {
-        User user = (User) userService.loadUserByUsername(principal.getName());
+        //User user = (User) userService.loadUserByUsername(principal.getName());
+        User user = loadUserService.loadUserSecurely(principal.getName());
         List<User> userList = (List<User>) userService.getAllUsers();
         model.addAttribute("user", user);
         model.addAttribute("userlist", userList);

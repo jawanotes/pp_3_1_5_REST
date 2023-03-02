@@ -3,7 +3,7 @@ package ru.kata.spring.boot_security.demo.service;
 
 //import com.hkl.pp_3_1_2_crud_boot.dao.UserDao;
 //import com.hkl.pp_3_1_2_crud_boot.model.User;
-import org.springframework.context.annotation.Primary;
+//import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Set;
 //import java.util.stream.Collectors;
 
-@Primary
+//@Primary
 @Service
 public class UserServiceJpaImpl implements UserService {
     //private final UserDao userDao;
@@ -48,20 +48,23 @@ public class UserServiceJpaImpl implements UserService {
         //userDao.addUser(user);
     }
 
-    @Transactional(readOnly = true)
-    @Override
+    /**
+     * в сервисе вот тут смешной момент (отредактировано)
+     * + у тебя есть риск циклических зависимостей
+     * а ну ты костылем решил
+     *
+     * Harin Konstantin: 1 Transactional убрал
+     */
+    //@Transactional(readOnly = true)
+/*    @Override
     public User getUser(User user) {
         return getUser(user.getId());
-        //return userRepository.getReferenceById(user.getId());
-        //return userDao.getUser(user);
-    }
+    }*/
 
     @Transactional(readOnly = true)
     @Override
     public User getUser(Long id) {
         return userRepository.findById(id).get();
-        //return userRepository.getReferenceById(id);
-        //return userDao.getUser(id);
     }
 
     /*    @Override
@@ -98,8 +101,6 @@ public class UserServiceJpaImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        /*User user = userRepository.getUserByUsername(username);
-        return user;*/
         return userRepository.getUserByUsername(username);
     }
 

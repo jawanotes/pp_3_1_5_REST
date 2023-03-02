@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.kata.spring.boot_security.demo.service.LoadUserService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 //@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
@@ -21,16 +22,18 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
     private final PasswordEncoder passwordEncoder;
-
     private final UserService userService;
+    //private final LoadUserService loadUserService;
 
     public WebSecurityConfig(SuccessUserHandler successUserHandler,
                              PasswordEncoder passwordEncoder,
                              //@Qualifier("UserServiceJpaImpl")
-                             UserService userService) {
+                             UserService userService,
+                             LoadUserService loadUserService) {
         this.successUserHandler = successUserHandler;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
+        //this.loadUserService = loadUserService;
     }
 
     /**
@@ -41,10 +44,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        /**
+         * ну для твоего случая сработает
+         * но лучше раскоментить строку и убрать аутификейтед
+         * захочешь добавлять новые роли и будет трэш
+         */
         http
                 .authorizeRequests()
-                //.antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/user/**").authenticated()
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                //.antMatchers("/user/**").authenticated()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -85,6 +93,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         daoAuthenticationProvider.setUserDetailsService(userService);
         return daoAuthenticationProvider;
+    }
+
+    /**
+     * лоад юзер для секьюрити вынеси в отдельный сервис и используй его в конфиге
+     * + оставь один сервис ( который  jpa ) у тебя, больше быть не должно
+     */
+    @Bean(name = "loadUserServiceProvider")
+    protected LoadUserService loadUserServiceProvider() {
+        return new LoadUserService(userService);
     }
     /*@Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
