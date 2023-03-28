@@ -1,0 +1,27 @@
+<div th:fragment="tablist">
+    <div><h3>Admin panel</h3></div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users-block"
+                    type="button" role="tab"
+                    aria-controls="users-block" aria-selected="true">Users table
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="new-user-tab" data-bs-toggle="tab" data-bs-target="#new-user" type="button"
+                    role="tab"
+                    aria-controls="new-user" aria-selected="false">New User
+            </button>
+        </li>
+
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="users-block" role="tabpanel" aria-labelledby="users-tab">
+            <div th:replace="blocks/usertable :: usertable"/>
+        </div>
+        <div class="tab-pane fade" id="new-user" role="tabpanel" aria-labelledby="new-user-tab">
+            <div th:replace="blocks/newuser :: newuser"/>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,68 @@
+<div th:fragment="modaledit">
+    <button id="edit-user1" type="button" class="btn btn-info" data-bs-toggle="modal"
+            th:data-bs-target="'#modal'+${array.getId()}">
+        Edit
+    </button>
+
+    <div class="modal fade" th:id="'modal'+${array.getId()}" tabindex="-1"
+
+         aria-hidden="true">
+        <form class="form-group" th:action="@{/admin/update}" th:method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="userEditDialogLabel2">Edit user</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center font-weight-bold">
+                            <label class="bold">ID</label>
+                        </div>
+                        <div class="form row justify-content-center">
+                            <input class="form-control form-control-md w-50" type="text"
+                                   th:value="${array.getId()}" name="id" readonly/>
+                        </div>
+
+
+                        <div class="text-center font-weight-bold">
+                            <label>User name</label>
+                        </div>
+                        <div class="form row justify-content-center">
+                            <input class="form-control form-control-md w-50" type="text"
+                                   th:value="${array.getUsername()}" name="username"/>
+                        </div>
+                        <div class="text-center font-weight-bold">
+                            <label>Password</label>
+                        </div>
+                        <div class="form row justify-content-center">
+                            <input class="form-control form-control-md w-50" type="text"
+                                   name="password" required/>
+                        </div>
+                        <div class="text-center font-weight-bold">
+                            <label for="roles" class="bold"> Roles:</label>
+                        </div>
+                        <div class="form row justify-content-center">
+                            <select multiple class="form-control form-control-md w-50"
+                                    id="roles" name="roles" size="2"
+                                    required>
+                                <option th:each="role: ${allRoles}"
+                                        th:text="${role.authority}"
+                                        th:value="${role.id}"
+                                        th:selected="${array.roles.containsAll(role)}">
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+<!--                    row justify-content-right-->
+                    <div class="modal-footer ">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

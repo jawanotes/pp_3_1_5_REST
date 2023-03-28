@@ -1,0 +1,33 @@
+<div th:fragment="navigationbar" xmlns:sec="http://www.w3.org/1999/xhtml">
+  <nav class="navbar navbar-expand navbar-dark bg-dark d-flex justify-content-between sticky-top">
+    <div class="container-fluid g-0 px-3">
+      <div class="nav-item text-light fs-4">
+        <span class="fw-bolder"  sec:authentication="name"></span>
+        <span> with roles: </span>
+        <span  th:each="authority : ${#authentication.getAuthorities()}"
+               th:if="${authority.getAuthority().startsWith('ROLE_')}"
+               th:text="${authority.getAuthority().replaceFirst('ROLE_', ' ')}">
+            </span>
+      </div>
+      <a class="nav-link text-white-50" th:href="@{/logout}">logout</a>
+    </div>
+  </nav>
+</div>
+
+<!--<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <b>
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
+           th:text="${user.getUsername()}+' with roles: '+${user.getRolesAsString()}"
+           th:href="@{/user}">
+            Username and roles
+        </a>
+    </b>
+
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <form th:action="@{/logout}" th:method="get">
+                <input class="button button-block" type="submit" value="Logout"/>
+            </form>
+        </li>
+    </ul>
+</nav>-->

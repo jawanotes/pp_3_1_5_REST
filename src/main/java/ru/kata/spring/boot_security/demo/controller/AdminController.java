@@ -10,10 +10,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.LoadUserService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -49,6 +51,8 @@ public class AdminController {
         List<User> userList = (List<User>) userService.getAllUsers();
         model.addAttribute("user", user);
         model.addAttribute("userlist", userList);
+        model.addAttribute("newuser", new User(0L,"", "", new HashSet<Role>()));
+        model.addAttribute("allRoles", userService.getAllRoles());
         return "/admin/users";
     }
 

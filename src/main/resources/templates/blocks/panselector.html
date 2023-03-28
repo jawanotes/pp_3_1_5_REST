@@ -1,0 +1,35 @@
+<div th:fragment="panselector">
+  <div>
+<!--    <br>-->
+    <ul list="none">
+<!--        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">-->
+<!--                <ul list="none" class="nav nav-pills" role="tablist" aria-orientation="vertical">-->
+                    <li class="ui-state-active">
+                        <a th:href="@{/admin}" class="nav-link" role="tab" data-toggle="pill" >Admin</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/user}" class="nav-link" role="tab" data-toggle="pill">User</a>
+                    </li>
+                </ul>
+    <!--<button class="nav-link active g-0 mt-2" type="button" role="tab" aria-selected="true">Admin</button>
+    <button   type="button" class="btn btn-link" role="tab" aria-selected="false">User</button>-->
+<!--    class="nav-link g-0"-->
+  </div>
+</div>
+
+<div th:fragment="panselector2" xmlns:sec="http://www.w3.org/1999/xhtml"
+     class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+    <a sec:authorize="hasRole('ADMIN')"
+       class="nav-link active"
+       id="v-pills-admin-tab" data-toggle="pill" href="#v-pills-admin" role="tab"
+       aria-controls="v-pills-admin" aria-selected="true">Admin</a>
+
+    <a class="nav-link"
+       th:classappend="${#authorization.expression('hasRole(''ADMIN'')') ? '' : 'active'}"
+       id="v-pills-user-tab" data-toggle="pill" href="#v-pills-user" role="tab"
+       aria-controls="v-pills-user" aria-selected="false"
+
+    >User</a>
+
+</div>
