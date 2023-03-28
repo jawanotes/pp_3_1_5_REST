@@ -29,7 +29,7 @@ public class UnprivilegedController {
     }
     @GetMapping("")
     public String index() {
-        return "index";
+        return "redirect:/user/user";
     }
     @GetMapping("/user")
     public String userPage(Principal principal, ModelMap model) {
