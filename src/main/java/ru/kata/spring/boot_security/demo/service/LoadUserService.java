@@ -15,21 +15,9 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
  * туда за авторварь дао
  * и вызови метод дао
  */
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Service
 public class LoadUserService implements UserDetailsService {
-    //private final UserService  userService;
     private UserRepository userRepository;
-
-    /*public LoadUserService(//UserService userService,
-                           UserRepository userRepository) {
-        //this.userService = userService;
-        this.userRepository = userRepository;
-    }*/
-    /*public User loadUserSecurely(String username) {
-        return (User) userService.loadUserByUsername(username);
-    }*/
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {

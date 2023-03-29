@@ -22,18 +22,14 @@ import ru.kata.spring.boot_security.demo.service.LoadUserService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
     private final PasswordEncoder passwordEncoder;
-    //private final UserService userService;
     private final LoadUserService loadUserService;
 
     public WebSecurityConfig(SuccessUserHandler successUserHandler,
                              PasswordEncoder passwordEncoder,
-                             //@Qualifier("UserServiceJpaImpl")
-                             //UserService userService,
                              LoadUserService loadUserService
                             ) {
         this.successUserHandler = successUserHandler;
         this.passwordEncoder = passwordEncoder;
-        //this.userService = userService;
         this.loadUserService = loadUserService;
     }
 

@@ -1,12 +1,9 @@
 package ru.kata.spring.boot_security.demo.model;
 
-//import org.springframework.stereotype.Component;
 
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-//import org.hibernate.annotations.LazyCollection;
-//import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,6 +13,13 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Роман Дамбуев:
+ * Data использовать в entity плохая практика и так как используется set необходимо переопределить equals и hashCode
+ * можно только по полю id, для изучения https://habr.com/ru/company/haulmont/blog/564682/
+ *
+ * Константин Харин: именно по этому @Data уже закомментирован
+ */
 @Entity
 //@Data
 @Setter
@@ -33,7 +37,6 @@ public class User implements UserDetails {
     @Column(name = "password")
     @Size(min=2, message = "At least 2 symbols")
     private String password;
-    //private Boolean isActive;
 
     /**
      * Nikita Nesterenko: private List<Role> roles; - поменять на Set,
@@ -55,7 +58,12 @@ public class User implements UserDetails {
     //private Set<Role> roles;
     //@LazyCollection(LazyCollectionOption.TRUE)
     //private List<Role> roles;
-    @Fetch(FetchMode.JOIN)
+    /**
+     * Роман Дамбуев:
+     * @Fetch(FetchMode.JOIN) по факту равен FetchType.EAGER и ухудшает скорость запроса,
+     * лучше запрос с join fetch  https://www.baeldung.com/hibernate-fetchmode
+     */
+    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany
     private Set<Role> roles;
 
