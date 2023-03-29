@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,18 +12,14 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
 
-//@Primary
 @Service
 public class UserServiceJpaImpl implements UserService {
     private final UserRepository userRepository;
-    private final RoleService roleService;
     private final PasswordEncoder encoder;
 
     public UserServiceJpaImpl(UserRepository userRepository,
-                              RoleService roleService,
                               PasswordEncoder encoder) {
         this.userRepository = userRepository;
-        this.roleService = roleService;
         this.encoder = encoder;
     }
 
@@ -67,7 +64,7 @@ public class UserServiceJpaImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<?> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 

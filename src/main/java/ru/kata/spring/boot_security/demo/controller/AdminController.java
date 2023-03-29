@@ -16,6 +16,7 @@ import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+//import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/admin")
@@ -24,6 +25,7 @@ public class AdminController {
     private final UserService userService;
     private final LoadUserService loadUserService;
     private final RoleService roleService;
+    //Logger logger = Logger.getLogger("logger");
 
     public AdminController(UserService userService,
                            RoleService roleService,
@@ -50,6 +52,8 @@ public class AdminController {
         User user = (User) loadUserService.loadUserByUsername(principal.getName());
         List<User> userList = (List<User>) userService.getAllUsers();
         model.addAttribute("user", user);
+        //logger.info(userList.get(0).getUsername());
+        //logger.info(userList.get(0).getRolesAsString());
         model.addAttribute("userlist", userList);
         model.addAttribute("newuser", new User(0L,"", "", new HashSet<Role>()));
         model.addAttribute("allRoles", roleService.getAllRoles());

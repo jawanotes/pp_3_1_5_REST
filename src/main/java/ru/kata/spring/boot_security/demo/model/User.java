@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.model;
 
 
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -63,7 +64,9 @@ public class User implements UserDetails {
      * @Fetch(FetchMode.JOIN) по факту равен FetchType.EAGER и ухудшает скорость запроса,
      * лучше запрос с join fetch  https://www.baeldung.com/hibernate-fetchmode
      */
-    @Fetch(FetchMode.SUBSELECT)
+    //@Fetch(FetchMode.JOIN)
+    @Fetch(FetchMode.SELECT)
+    //@BatchSize(size = 5)
     @ManyToMany
     private Set<Role> roles;
 
