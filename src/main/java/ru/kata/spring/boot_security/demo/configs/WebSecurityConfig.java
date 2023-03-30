@@ -10,12 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.kata.spring.boot_security.demo.service.LoadUserService;
-//import ru.kata.spring.boot_security.demo.service.UserService;
 
-//@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
-/*    The prePostEnabled property enables Spring Security pre/post annotations.
-      The securedEnabled property determines if the @Secured annotation should be enabled.
-      The jsr250Enabled property allows us to use the @RoleAllowed annotation.*/
 @Configuration
 @EnableWebSecurity//(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -47,15 +42,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          * захочешь добавлять новые роли и будет трэш
          */
         http
+                .cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 //.antMatchers("/user/**").authenticated()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .and()
-                .authorizeRequests()
-                .antMatchers("/api/**").hasRole("ADMIN")
+                .antMatchers("/admin/**", "/api/**").hasRole("ADMIN")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/index").permitAll()
@@ -91,7 +84,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-        //daoAuthenticationProvider.setUserDetailsService(userService);
         daoAuthenticationProvider.setUserDetailsService(loadUserService);
         return daoAuthenticationProvider;
     }
@@ -104,8 +96,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected LoadUserService loadUserServiceProvider() {
         return new LoadUserService();
     }
-    /*@Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder);
-    }*/
 }

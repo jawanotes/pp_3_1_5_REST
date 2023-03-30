@@ -3,10 +3,6 @@ package ru.kata.spring.boot_security.demo.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -16,7 +12,6 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
-//import java.util.logging.Logger;
 
 
 @RestController
@@ -26,7 +21,6 @@ import java.util.Set;
 public class MainApiController {
     private final UserService userService;
     private final RoleService roleService;
-    //Logger logger;
 
     @GetMapping
     public ResponseEntity<List<User>> getUsers() {
@@ -41,6 +35,10 @@ public class MainApiController {
     public ResponseEntity<User> getUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUser(id));
     }
+
+    /**
+     * пример из курса Алишева
+     */
     /*@PostMapping("newUser")
     public ResponseEntity<HttpStatus> addUser(@RequestBody @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -58,13 +56,13 @@ public class MainApiController {
     @PostMapping()
     public ResponseEntity<HttpStatus> newUser(@RequestBody @Valid User user) {
         userService.addUser(user);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody User user) {
         userService.updateUser(user);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

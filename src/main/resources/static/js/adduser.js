@@ -15,9 +15,6 @@ formAdd.onsubmit = async (e) => {
         }
     }
 
-    console.log(nameNew.value);
-    console.log(passwordNew.value);
-    console.log(arrayAdd);
     let response = await fetch('/api',{
         method: 'POST',
         body: JSON.stringify({
@@ -33,5 +30,5 @@ formAdd.onsubmit = async (e) => {
         fillUsersTable();
     }
     formAdd.reset();
-    // document.getElementById('users-block').click();
+    document.getElementById('users-tab').click();
 };

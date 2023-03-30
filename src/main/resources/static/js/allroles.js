@@ -5,6 +5,13 @@ async function fetchRoles() {
     const response = await fetch('/api/roles');
     return await response.json();
 }
+
+function createOption(role) {
+    let option1 = document.createElement("option");
+    option1.value = role.id;
+    option1.text = role.name;
+    return option1;
+}
 function fillAllRoles() {
     /*const tableId = document.getElementById("allUsersTable");
     let tableData = "";*/
@@ -16,41 +23,13 @@ function fillAllRoles() {
     (async () => {
         const data = await fetchRoles();
         allroles = data;
-        console.log(allroles);
+        //console.log(allroles);
         data.forEach(role => {
-            let option = document.createElement("option");
-            option.value = role.id;
-            option.text = role.name;
-            //option.id = role.name;
-            console.log(option);
-            roleSelector1.appendChild(option);
-            roleSelector2.appendChild(option);
-            roleSelector3.appendChild(option);
+            roleSelector1.appendChild(createOption(role));
+            roleSelector2.appendChild(createOption(role));
+            roleSelector3.appendChild(createOption(role));
         })
     })();
-
-/*    fetch("/api/roles").then(res => res.json())
-        .then(roles => {
-            allroles = roles;
-            console.log(allroles);
-            //return roles;
-        })
-/!*        .then(roles => {
-
-            for(let role of roles) {
-                let option = document.createElement("option");
-                option.value = role.id;
-                option.id = role.name;
-                option.text = role.name;
-
-                roleSelector1.appendChild(option);
-                roleSelector2.appendChild(option);
-                roleSelector3.appendChild(option);
-            }
-        })*!/
-        .catch(error => console.log(error));*/
-
-    //const roleSelector = document.getElementById('rolesEditSelect');
 
 }
 

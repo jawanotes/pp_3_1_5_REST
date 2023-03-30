@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,12 +36,6 @@ public class UserServiceJpaImpl implements UserService {
      *
      * Harin Konstantin: 1 Transactional убрал
      */
-    //@Transactional(readOnly = true)
-/*    @Override
-    public User getUser(User user) {
-        return getUser(user.getId());
-    }*/
-
     @Transactional(readOnly = true)
     @Override
     public User getUser(Long id) {

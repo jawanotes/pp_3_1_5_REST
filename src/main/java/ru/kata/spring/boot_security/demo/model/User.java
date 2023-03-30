@@ -22,9 +22,7 @@ import java.util.stream.Collectors;
  * Константин Харин: именно по этому @Data уже закомментирован
  */
 @Entity
-//@Data
 @Setter
-//@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
@@ -44,21 +42,7 @@ public class User implements UserDetails {
      *                      разобраться с аннотациями над полем,
      *                      у тебя куча их и не все нужны
      */
-    /*
-    @Fetch(FetchMode.JOIN)
-    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_roles"))
-    */
 
-    //@ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    //@CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-
-    //@ManyToMany(cascade = {CascadeType.ALL}) // “Detached Entity Passed to Persist” Error
-    //@ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
-    //@Enumerated(EnumType.STRING)
-    //private Set<Role> roles;
-    //@LazyCollection(LazyCollectionOption.TRUE)
-    //private List<Role> roles;
     /**
      * Роман Дамбуев:
      * @Fetch(FetchMode.JOIN) по факту равен FetchType.EAGER и ухудшает скорость запроса,
