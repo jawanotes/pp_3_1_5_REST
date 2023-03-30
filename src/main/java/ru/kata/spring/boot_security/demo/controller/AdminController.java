@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,7 +19,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
-//@PreAuthorize("hasRole('ADMIN')")
+@Deprecated
 public class AdminController {
     private final UserService userService;
     private final LoadUserService loadUserService;
@@ -49,14 +48,14 @@ public class AdminController {
 
     @GetMapping("/users")
     public String listUsers(ModelMap model, Principal principal) {
-        User user = (User) loadUserService.loadUserByUsername(principal.getName());
-        List<User> userList = (List<User>) userService.getAllUsers();
-        model.addAttribute("user", user);
+        //User user = (User) loadUserService.loadUserByUsername(principal.getName());
+        //List<User> userList = userService.getAllUsers();
+        //model.addAttribute("user", user);
         //logger.info(userList.get(0).getUsername());
         //logger.info(userList.get(0).getRolesAsString());
-        model.addAttribute("userlist", userList);
-        model.addAttribute("newuser", new User(0L,"", "", new HashSet<Role>()));
-        model.addAttribute("allRoles", roleService.getAllRoles());
+        //model.addAttribute("userlist", userList);
+        //model.addAttribute("newuser", new User(0L,"", "", new HashSet<Role>()));
+        //model.addAttribute("allRoles", roleService.getAllRoles());
         return "/admin/users";
     }
 

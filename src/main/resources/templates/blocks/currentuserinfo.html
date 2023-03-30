@@ -1,12 +1,11 @@
-<div th:fragment="userinfo">
+<div th:fragment="userinfo" xmlns:sec="http://www.w3.org/1999/xhtml">
     <h3 class="w-100"> User Information - page</h3>
-    <!--  <div class="card-header"><h4> About user</h4></div>-->
     <div class="container-fluid border">
         <caption class="container col-2 justify-content-center">
-          <h5>About user</h5>
+            <h5>About user</h5>
         </caption>
         <div class="w-100" style="background-color: white">
-          <hr>
+            <hr>
             <table class="table table-striped table-border-top-light w-100">
 
                 <thead>
@@ -15,29 +14,19 @@
                     <th th>Name</th>
                     <th th>Password</th>
                     <th th>Roles</th>
-                    <!--            <th th>Edit</th>
-                                <th th>Delete</th>-->
                 </tr>
                 </thead>
                 <tbody>
-                <!--        <tr th:each="array: ${userlist}">-->
                 <tr>
-                    <td th:text="${user.getId()}"/>
-                    <td th:text="${user.getUsername()}"/>
-                    <td th:text="${user.getPassword()}"/>
-                    <td th:text="${user.getRolesAsString()}"/>
-                    <!--            <td>
-                                    <a th:href="@{/admin/edit(id=${array.getId()})}">Edit</a>
-                                </td>
-                                <td>
-                                    <form th:method="POST"
-                                          th:action="@{/admin/delete(id=${array.getId()})}"
-                                    >
-                                        <input class="button"
-                                               type="submit"
-                                               value="Delete"/>
-                                    </form>
-                                </td>-->
+                    <td sec:authentication="principal.id"></td>
+                    <td sec:authentication="principal.username"></td>
+                    <td sec:authentication="principal.password"></td>
+                    <td>
+                        <span th:each="authority : ${#authentication.getAuthorities()}"
+                              th:if="${authority.getAuthority().startsWith('ROLE_')}"
+                              th:text="${authority.getAuthority().replaceFirst('ROLE_', ' ')}">
+                        </span>
+                    </td>
                 </tr>
                 </tbody>
             </table>

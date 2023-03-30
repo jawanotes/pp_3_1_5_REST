@@ -69,34 +69,11 @@
     </div>
 </div>
 
+<div th:replace="blocks/modaledit :: modaledit"/>
+
+<div th:replace="blocks/modaldelete :: modaldelete"/>
 
 <hr/>
-<!--<a href="/admin/new">Create new person</a>-->
-
-
-<!-- Button trigger modal -->
-<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-</button>-->
-
-<!--
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>-->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
@@ -104,65 +81,16 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>-->
+<!--<script type="module" th:src="@{/static/js/all-users.js}"></script>-->
+<!--<script type="text/javascript" src="/static/js/all-users.js"></script>-->
+<!--<script type="text/javascript" src="../static/js/all-users.js"></script>-->
 
-<!--<script>
-    $('#userEditDialog').on('shown.bs.modal', function (event) {
-        let button = $(event.relatedTarget) // Button that triggered the modal
-        let userId = button.data('userId') // Extract info from data-* attributes
+<!-- Thymeleaf is VERY helpful here! Also https://www.baeldung.com/spring-mvc-static-resources -->
+<script th:src="@{/js/allroles.js}" type="text/javascript"></script>
+<script th:src="@{/js/all-users.js}" type="text/javascript"></script>
+<script th:src="@{/js/adduser.js}" type="text/javascript"></script>
+<script th:src="@{/js/edituser.js}" type="text/javascript"></script>
+<script th:src="@{/js/deleteuser.js}" type="text/javascript"></script>
 
-        let modal = $(this)
-        modal.find('#user-id').val(userId.id)
-        modal.find('#user-name').val(userId.username)
-        modal.find('#user-password').val(userId.password)
-        /*if (userId) {
-            $.get({
-                url: '/api/v1/user/' + userId,
-                success: (data) => {
-                    let modal = $(this)
-                    modal.find('#user-id').val(data.id)
-                    modal.find('#user-name').val(data.username)
-                    modal.find('#user-password').val(data.password)
-                },
-                error: (err) => {
-                    alert(err);
-                }
-            });
-        }*/
-    })
-
-    $('#save-user-button').click(function() {
-        let modal = $('#userEditDialog')
-        let user = {
-            username: modal.find('#user-name').val(),
-            password: modal.find('#user-password').val(),
-        };
-        if (modal.find('#user-id').val()) {
-            user.id = modal.find('#user-id').val()
-        }
-        $.ajax({
-            url: '/api/v1/user',
-            type: 'POST',
-            data: JSON.stringify(user),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: () => {
-                location.reload()
-            },
-            error: (err) => {
-                alert(err);
-            }
-        })
-
-        modal.modal('hide');
-    });
-</script>-->
-<!--<script>
-    var myModal = document.getElementById('myModal')
-    var myInput = document.getElementById('myInput')
-
-    myModal.addEventListener('shown.bs.modal', function () {
-        myInput.focus()
-    })
-</script>-->
 </body>
 </html>

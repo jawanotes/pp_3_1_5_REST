@@ -14,60 +14,20 @@
                 <th th>Delete</th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="array: ${userlist}">
+            <tbody id="allUsersTable">
+            <!--<tr th:each="array: ${userlist}">
                 <td th:text="${array.getId()}"/>
                 <td th:text="${array.getUsername()}"/>
                 <td th:text="${array.getPassword()}"/>
                 <td th:text="${array.getRolesAsString()}"/>
                 <td>
-<!--                    <a th:href="@{/admin/edit(id=${array.getId()})}">Edit</a>-->
-                    <!--<form th:action="#EditModal">
-                        <input class="button" type="submit"/>
-                    </form>-->
-                    <!--<button class="btn btn-info" data-toggle="modal"
-                            data-target="#EditModal" type="button"
-                            >Edit
-                    </button>-->
                     <div th:replace="blocks/modaledit :: modaledit"/>
-
-
-
-                    <!--<button type="button" class="btn btn-info" data-bs-toggle="modal"
-                            th:aria-controls="@{/admin/edit(id=${array.getId()})}"
-
-                            >Edit
-                    </button>-->
                 </td>
                 <td>
                     <div th:replace="blocks/modaldelete :: modaldelete"/>
-                    <!--<form th:method="POST"
-                          th:action="@{/admin/delete(id=${array.getId()})}"
-                    >
-                        <input class="button"
-                               type="submit"
-                               value="Delete"/>
-                    </form>-->
                 </td>
-            </tr>
+            </tr>-->
             </tbody>
         </table>
     </div>
-
-    <!--<div class="modal fade" id="EditModal111" tabindex="-1" role="dialog" aria-labelledby="EditModalLabel111"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="EditModalLabel111">Edit user</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
-                <form id="formEdit123">
-                </form>
-            </div>
-        </div>
-    </div>-->
-
-
-
 </div>

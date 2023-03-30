@@ -1,26 +1,27 @@
 <div th:fragment="modaldelete">
-    <button id="delete-user" type="button" class="btn btn-danger" data-bs-toggle="modal"
+<!--    <button id="delete-user" type="button" class="btn btn-danger" data-bs-toggle="modal"
             th:data-bs-target="'#modal-delete'+${array.getId()}">
         Delete
-    </button>
+    </button>-->
 
-    <div class="modal fade" th:id="'modal-delete'+${array.getId()}" tabindex="-1"
-
+<!--    <div class="modal fade" th:id="'modal-delete'+${array.getId()}" tabindex="-1"-->
+    <div class="modal fade" id="modal-delete" tabindex="-1"
          aria-hidden="true">
-        <form class="form-group" th:action="@{/admin/delete}" th:method="post">
+        <form class="form-group" id="delete-form">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title" id="userDeleteDialogLabel">Delete user</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
                     </div>
+
                     <div class="modal-body" aria-disabled="true">
                         <div class="text-center font-weight-bold">
                             <label class="bold">ID</label>
                         </div>
                         <div class="form row justify-content-center">
                             <input class="form-control form-control-md w-50" type="text"
-                                   th:value="${array.getId()}" name="id" readonly />
+                                   id="deleteId" name="id" readonly />
                         </div>
 
 
@@ -29,7 +30,7 @@
                         </div>
                         <div class="form row justify-content-center">
                             <input class="form-control form-control-md w-50" type="text"
-                                   th:value="${array.getUsername()}" name="username" readonly />
+                                   id="deleteUsername" name="username" readonly />
                         </div>
 
                         <div class="text-center font-weight-bold">
@@ -37,32 +38,32 @@
                         </div>
                         <div class="form row justify-content-center">
                             <input class="form-control form-control-md w-50" type="text"
-                                   th:value="${array.getPassword()}"
+                                   id="deletePassword"
                                    name="password" readonly />
                         </div>
 
                         <div class="text-center font-weight-bold">
-                            <label for="roles" class="bold"> Roles:</label>
+                            <label for="deleteRoles" class="bold"> Roles:</label>
                         </div>
                         <div class="form row justify-content-center">
                             <select multiple class="form-control form-control-md w-50"
-                                    id="roles" name="roles" size="2" disabled
-                                    >
-                                <option th:each="role: ${allRoles}"
+                                    id="deleteRoles" name="roles" size="2" disabled>
+<!--                                <option th:each="role: ${allRoles}"
                                         th:text="${role.authority}"
                                         th:value="${role.id}"
                                         th:selected="${array.roles.containsAll(role)}">
-                                </option>
+                                </option>-->
                             </select>
                         </div>
 
                     </div>
 
-                    <div class="modal-footer ">
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
                         </button>
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </div>
+
                 </div>
             </div>
         </form>
